@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Простое приложение на Vue.js</title>
+  </head>
+  <body>
+    <div id="app">{{ message }}</div>
+
+    <!-- Подключение Vue.js через CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+      // Создаем новый Vue экземпляр
+      var app = new Vue({
+        el: "#app", // Связываем Vue экземпляр с элементом с id "app"
+        data: {
+          message: "Привет, Vue.js!", // Определяем данные, которые будут отображаться в HTML
+        },
+      });
+    </script>
+  </body>
+</html>
