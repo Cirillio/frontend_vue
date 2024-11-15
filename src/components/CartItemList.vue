@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col mt-5 gap-2">
+  <div class="flex flex-col grow overflow-y-scroll hide-scrollbar my-5 gap-2">
     <CartItem />
     <CartItem />
     <CartItem />
