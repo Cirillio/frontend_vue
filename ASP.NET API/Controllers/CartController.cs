@@ -35,8 +35,6 @@ namespace REST_API
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, "Internal Server Error");
             }
-
-            return StatusCode(201, cartItem);
         }
 
         // GET: api/cart

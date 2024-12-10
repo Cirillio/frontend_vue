@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 
 import axios from 'axios'
 
@@ -11,8 +11,8 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  onUpdateCart: Function,
 })
-const emit = defineEmits()
 const amountRef = ref(props.amount)
 
 function checkInput(event) {
@@ -50,7 +50,7 @@ const addCartItem = async () => {
     const response = await axios.post('http://localhost:5154/api/cart', cartItem)
 
     if (response.status === 200) {
-      emit('itemAdded', response.data)
+      await props.onUpdateCart()
       console.log('Item added to cart successfully:', response.data)
     } else {
       console.warn('Unexpected response status:', response.status)
@@ -63,7 +63,7 @@ const addCartItem = async () => {
 
 <template>
   <div
-    class="bg-white font-Source w-auto max-h-48 items-center flex flex-col gap-4 relative rounded-md border-slate-500 p-6 transition-all hover:shadow-md"
+    class="bg-white font-Source w-auto max-h-48 items-center flex flex-col gap-4 relative rounded-md p-6 transition-all hover:shadow-md hover:border hover:border-slate-500"
   >
     <button
       class="absolute top-2 right-2 opacity-20 w-4 cursor-pointer transition-all hover:-translate-y-1"
