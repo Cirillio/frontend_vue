@@ -108,13 +108,37 @@ const addToCart = async (product) => {
     imgUrl: product.imgUrl,
     product_id: product.id,
   }
+  cart.value.push(productInCart)
+  product.isAdded = true
 }
 
-const deleteFromCart = async (product) => {}
+const deleteFromCart = async (id) => {
+  cart.value.splice(cart.value.indexOf(cart.value.find((item) => item.product_id === id)), 1)
+  items.value.find((item) => item.id === id).isAdded = false
+}
 
 const OnClickCart = async (product) => {
-  product.isAdded = !product.isAdded
-  product.isAdded ? await addToCart(product) : await deleteFromCart(product)
+  product.isAdded ? await deleteFromCart(product.id) : await addToCart(product)
+  console.table(product)
+}
+
+const makeOrder = async () => {
+  console.log('makeOrder')
+  await axios
+    .post('https://e8451dbd6147c45d.mokky.dev/orders', {
+      cart: cart.value,
+      total_price: totalPrice.value,
+      vat_price: vatPrice.value,
+      order_created: Date(Date.now()),
+    })
+    .then((response) => {
+      console.table(response)
+      cart.value = []
+      items.value.forEach((item) => (item.isAdded = false))
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 }
 
 const fetchFavorites = async () => {
@@ -139,6 +163,15 @@ const fetchCart = async () => {
     .get('https://e8451dbd6147c45d.mokky.dev/cart')
     .then(({ data: cartList }) => {
       cart.value = cartList
+      console.log(cartList)
+
+      items.value = items.value.map((item) => {
+        const cartItem = cartList.find((cartItem) => cartItem.product_id === item.id)
+        if (!cartItem) {
+          return item
+        }
+        return { ...item, isAdded: true, cartItemId: cartItem.id }
+      })
     })
     .catch((error) => {
       console.error(error)
@@ -146,12 +179,13 @@ const fetchCart = async () => {
 }
 
 const updateCart = async () => {
+  cart.value.forEach((item, index) => {
+    item.id = index + 1
+  })
   await axios
-    .put('https://e8451dbd6147c45d.mokky.dev/cart', cart.value)
+    .patch('https://e8451dbd6147c45d.mokky.dev/cart', cart.value)
     .then((response) => {
-      const updatedCart = response.data
-      console.log(updatedCart)
-      // cart.value = updatedCart
+      console.log(response)
     })
     .catch((error) => {
       console.error(error)
@@ -182,6 +216,7 @@ onMounted(async () => {
   await fetchData(itemsUrl)
   await fetchFavorites()
   await fetchCart()
+  cartInitialized.value = true
 })
 
 watch(
@@ -194,13 +229,13 @@ watch(
   { deep: true },
 )
 
-provide('cart', { closeDrawer, cart })
+provide('cart', { closeDrawer, cart, OnClickCart, deleteFromCart, makeOrder })
 </script>
 
 <template>
-  <Drawer v-if="switchDrawer" :total-price="totalPrice" :vat-price="vatPrice" />
+  <Drawer v-if="switchDrawer" :total-price="totalPrice" :vat-price="vatPrice" v-auto-animate />
   <div ref="container"></div>
-  <div class="w-4/5 m-auto bg-white h-full rounded-xl shadow-xl mt-10">
+  <div class="w-4/5 m-auto bg-white h-full min-h-[90vh] rounded-xl shadow-xl mt-10">
     <Header @open-drawer="openDrawer" :total-price="totalPrice" />
 
     <div class="p-10">

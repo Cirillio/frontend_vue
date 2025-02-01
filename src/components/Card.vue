@@ -13,16 +13,20 @@ defineProps({
 
 <template>
   <div
-    class="relative flex flex-col justify-between w-fit bg-white border border-slate-100 rounded-3xl p-8 cursor-pointer hover:-translate-y-2 hover:shadow-lg transition-all"
+    class="relative flex flex-col justify-between w-fit overflow-hidden bg-white border border-[--lime] rounded-3xl p-8 cursor-pointer hover:-translate-y-2 hover:-translate-x-2 hover:border-green-500 hover:border-1.5 duration-200 transition-all group"
   >
     <img
       @click="onClickFavorite"
-      class="absolute top-5 left-5"
+      class="absolute top-5 left-5 z-10"
       :src="isFavorite ? '/like1.svg' : 'like2.svg'"
       alt="favorite"
     />
 
-    <img :src="imageUrl" alt="sneakerimg" />
+    <img
+      class="group-hover:scale-110 transition-all duration-500 z-0"
+      :src="imageUrl"
+      alt="sneakerimg"
+    />
     <div class="flex justify-between mt-5 flex-wrap">
       <p class="my-2 w-full">{{ productName }}</p>
       <div class="flex flex-col">

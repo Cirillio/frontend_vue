@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  --lime: rgb(247 254 231);
+}
+
 body {
   background: rgb(247 254 231);
 }
