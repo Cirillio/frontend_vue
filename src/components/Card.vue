@@ -1,5 +1,6 @@
 <script setup>
 defineProps({
+  id: Number,
   imageUrl: String,
   productName: String,
   productPrice: Number,
@@ -23,7 +24,7 @@ defineProps({
 
     <img :src="imageUrl" alt="sneakerimg" />
     <div class="flex justify-between mt-5 flex-wrap">
-      <p class="mt-5 w-full">{{ productName }}</p>
+      <p class="my-2 w-full">{{ productName }}</p>
       <div class="flex flex-col">
         <span class="text-slate-400">Цена</span>
         <b>{{ productPrice }} руб.</b>
