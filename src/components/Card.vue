@@ -13,7 +13,7 @@ defineProps({
 
 <template>
   <div
-    class="relative flex flex-col justify-between w-fit overflow-hidden bg-white border border-[--lime] rounded-3xl p-8 cursor-pointer hover:-translate-y-2 hover:-translate-x-2 hover:border-green-500 hover:border-1.5 duration-200 transition-all group"
+    class="relative z-0 flex flex-col justify-between w-fit overflow-hidden bg-white border border-[--lime] rounded-3xl p-8 cursor-pointer hover:-translate-y-2 hover:-translate-x-2 hover:border-green-500 hover:border-1.5 duration-200 transition-all group"
   >
     <img
       @click="onClickFavorite"

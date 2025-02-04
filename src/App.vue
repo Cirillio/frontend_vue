@@ -1,47 +1,60 @@
 <script setup>
-import Header from './components/Header.vue'
-import CardList from './components/CardList.vue'
-import Drawer from './components/Drawer.vue'
 import onClickFavorite from './components/onClickFavorite.vue'
+import Header from './components/Header.vue'
+import Drawer from './components/Drawer.vue'
 
 import axios from 'axios'
-import { onMounted, ref, h, render, reactive, watch, provide, computed } from 'vue'
 
-const switchDrawer = ref(false)
+import { onMounted, ref, h, render, computed, watch, provide } from 'vue'
 
 const container = ref(null)
 
-const itemsUrl = 'https://e8451dbd6147c45d.mokky.dev/products'
-
 const items = ref([])
 
-const cart = ref([])
-const cartInitialized = ref(false)
-
-const totalPrice = computed(() => cart.value.reduce((sum, item) => sum + item.price, 0))
-const vatPrice = computed(() => Math.round((totalPrice.value * 5) / 100))
-
-const filters = reactive({
-  sortBy: 'title',
-  search: '',
-})
-
-watch(filters, () => fetchData(itemsUrl))
-
-const onChangeSelect = (event) => {
-  filters.sortBy = event.target.value
+const fetchData = async (params) => {
+  await axios
+    .get('https://e8451dbd6147c45d.mokky.dev/products', { params })
+    .then((response) => {
+      if (response.data !== null) {
+        items.value = response.data
+      }
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 }
 
-const onSearchChange = (event) => {
-  filters.search = event.target.value
-}
+provide('items', { items, fetchData })
 
-const closeDrawer = () => {
-  switchDrawer.value = false
-}
+//#region favorites
+const favorites = ref([])
 
-const openDrawer = () => {
-  switchDrawer.value = true
+const fetchFavorites = async () => {
+  await axios
+    .get('https://e8451dbd6147c45d.mokky.dev/favorites?_relations=products')
+    .then(({ data: _favorites }) => {
+      _favorites.forEach((item) => {
+        const { product } = item
+        product.favoriteId = item.id
+        product.isFavorite = true
+        favorites.value.push(product)
+      })
+
+      console.log(favorites.value)
+      items.value = items.value.map((item) => {
+        item.isFavorite = false
+        const favorite = favorites.value.find((favorite) => favorite.id === item.id)
+        if (!favorite) {
+          return item
+        }
+        item.isFavorite = true
+        item.favoriteId = favorite.favoriteId
+        return item
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 }
 
 const addToFavorite = async (product) => {
@@ -68,9 +81,6 @@ const deleteFromFavorite = async (id) => {
 
 const OnClickFavorite = async (product) => {
   const favorite = {
-    productName: product.name,
-    imgUrl: product.imgUrl,
-    productPrice: product.price,
     product_id: product.id,
   }
   if (product.isFavorite) {
@@ -82,7 +92,9 @@ const OnClickFavorite = async (product) => {
           .get('https://e8451dbd6147c45d.mokky.dev/favorites?product_id=' + product.id)
           .then(async (response) => {
             console.log(response)
-            await deleteFromFavorite(response.data.find((item) => item.product_id == product.id).id)
+            const deletingFavorite = response.data.find((item) => item.product_id == product.id)
+            favorites.value.splice(favorites.value.indexOf(deletingFavorite), 1)
+            await deleteFromFavorite(deletingFavorite.id)
           })
           .catch((error) => {
             console.error(error)
@@ -95,11 +107,66 @@ const OnClickFavorite = async (product) => {
     render(vnode, container.value)
   } else {
     product.isFavorite = !product.isFavorite
+    favorites.value.push(favorite)
     await addToFavorite(favorite).catch((error) => {
       console.error(error)
     })
   }
 }
+
+provide('favorites', { favorites, OnClickFavorite })
+
+//#endregion favorites
+
+const switchDrawer = ref(false)
+
+const closeDrawer = () => {
+  switchDrawer.value = false
+}
+
+const openDrawer = () => {
+  switchDrawer.value = true
+}
+
+// #region Cart
+const cart = ref([])
+const cartInitialized = ref(false)
+
+const fetchCart = async () => {
+  await axios
+    .get('https://e8451dbd6147c45d.mokky.dev/cart')
+    .then(({ data: cartList }) => {
+      cart.value = cartList
+
+      items.value = items.value.map((item) => {
+        const cartItem = cartList.find((cartItem) => cartItem.product_id === item.id)
+        if (!cartItem) {
+          return item
+        }
+        return { ...item, isAdded: true, cartItemId: cartItem.id }
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+
+const updateCart = async () => {
+  cart.value.forEach((item, index) => {
+    item.id = index + 1
+  })
+  await axios
+    .patch('https://e8451dbd6147c45d.mokky.dev/cart', cart.value)
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+
+const totalPrice = computed(() => cart.value.reduce((sum, item) => sum + item.price, 0))
+const vatPrice = computed(() => Math.round((totalPrice.value * 5) / 100))
 
 const addToCart = async (product) => {
   const productInCart = {
@@ -141,82 +208,10 @@ const makeOrder = async () => {
     })
 }
 
-const fetchFavorites = async () => {
-  await axios
-    .get('https://e8451dbd6147c45d.mokky.dev/favorites')
-    .then(({ data: favorites }) => {
-      items.value = items.value.map((item) => {
-        const favorite = favorites.find((favorite) => favorite.product_id === item.id)
-        if (!favorite) {
-          return item
-        }
-        return { ...item, isFavorite: true, favoriteId: favorite.id }
-      })
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-}
+provide('cart', { cart, openDrawer, closeDrawer, OnClickCart, deleteFromCart, makeOrder })
 
-const fetchCart = async () => {
-  await axios
-    .get('https://e8451dbd6147c45d.mokky.dev/cart')
-    .then(({ data: cartList }) => {
-      cart.value = cartList
-      console.log(cartList)
-
-      items.value = items.value.map((item) => {
-        const cartItem = cartList.find((cartItem) => cartItem.product_id === item.id)
-        if (!cartItem) {
-          return item
-        }
-        return { ...item, isAdded: true, cartItemId: cartItem.id }
-      })
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-}
-
-const updateCart = async () => {
-  cart.value.forEach((item, index) => {
-    item.id = index + 1
-  })
-  await axios
-    .patch('https://e8451dbd6147c45d.mokky.dev/cart', cart.value)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-}
-const fetchData = async (url) => {
-  const params = {
-    sortBy: filters.sortBy,
-  }
-  if (filters.search) {
-    params.name = `*${filters.search}*`
-  }
-
-  await axios
-    .get(url, { params })
-    .then((response) => {
-      if (response.data !== null) {
-        items.value = response.data
-      }
-      console.log(items.value)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-}
-
-onMounted(async () => {
-  await fetchData(itemsUrl)
+watch(favorites, async () => {
   await fetchFavorites()
-  await fetchCart()
-  cartInitialized.value = true
 })
 
 watch(
@@ -228,44 +223,25 @@ watch(
   },
   { deep: true },
 )
-
-provide('cart', { closeDrawer, cart, OnClickCart, deleteFromCart, makeOrder })
+// #endregion Cart
+onMounted(async () => {
+  await fetchData({
+    sortBy: 'title',
+  })
+  await fetchCart()
+  await fetchFavorites()
+  cartInitialized.value = true
+})
 </script>
 
 <template>
   <Drawer v-if="switchDrawer" :total-price="totalPrice" :vat-price="vatPrice" v-auto-animate />
-  <div ref="container"></div>
+  <div ref="container" class="fixed top-0 left-0 z-10"></div>
   <div class="w-4/5 m-auto bg-white h-full min-h-[90vh] rounded-xl shadow-xl mt-10">
-    <Header @open-drawer="openDrawer" :total-price="totalPrice" />
+    <Header :total-price="totalPrice" />
 
     <div class="p-10">
-      <div class="flex wrap justify-between items-center mb-10">
-        <h2 class="text-3xl font-bold mb-5">Все кроссовки</h2>
-        <div class="flex gap-4">
-          <select
-            @change="onChangeSelect"
-            class="py-2 px-3 border rounded-md outline-none cursor-pointer"
-          >
-            <option value="name" class="cursor-pointer">По названию</option>
-            <option value="price" class="cursor-pointer">По цене (Возрастание)</option>
-            <option value="-price" class="cursor-pointer">По цене (Убывание)</option>
-          </select>
-        </div>
-        <div class="relative">
-          <img class="absolute top-3 left-3" src="/public/search.svg" alt="search" />
-          <input
-            @input="onSearchChange"
-            class="border rounded-md py-2 pl-11 pr-4 outline-none focud:border-gray-400"
-            type="text"
-            placeholder="Поиск..."
-          />
-        </div>
-      </div>
-      <CardList
-        :products="items"
-        @on-click-favorite="OnClickFavorite"
-        @on-click-cart="OnClickCart"
-      />
+      <router-view></router-view>
     </div>
   </div>
 </template>
