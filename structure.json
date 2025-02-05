@@ -1,0 +1,69 @@
+{
+  "artists": {
+    "id": "",
+    "name": "",
+    "bio": "",
+    "avatar": "//",
+    "crypt_id": "",
+    "links": {
+      "instagram": "",
+      "telegram": ""
+    }
+  },
+  "nfts": {
+    "id": "",
+    "name": "",
+    "description": "",
+    "img": {
+      "url": ""
+    },
+    "price": "",
+    "artist_id": "",
+    "created_date": "",
+    "sold_id": ""
+  },
+  "solds": {
+    "id": "",
+    "nft_id": "",
+    "bid_id": "",
+    "sold_date": ""
+  },
+  "subscribers": {
+    "id": "",
+    "artist_id": "",
+    "subscriber": {
+      "artist_id": ""
+    }
+  },
+  "collections": {
+    "id": "",
+    "name": "",
+    "artist_id": "",
+    "list": ["nft_id"]
+  },
+  "collection_subs": {
+    "id": "",
+    "artist_id": "",
+    "collection_id": ""
+  },
+  "auctions": {
+    "id": "",
+    "nft_id": "",
+    "start": "",
+    "end": "",
+    "artist_id": "",
+    "tags": ["some_string"]
+  },
+  "bids": {
+    "id": "",
+    "auction_id": "",
+    "artist_id": "",
+    "price": "",
+    "bid_date": ""
+  },
+  "crypts": {
+    "id": "",
+    "crypt_id": "",
+    "artist_id": ""
+  }
+}

@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #2b2b2b;
+  --color-backgroundSecond: #3b3b3b;
+  --color-label: #858584;
+  --color-text: #ffffff;
+  --color-action: #a259ff;
+  --color-blueAccent: #377df7;
+  --color-redAccent: #ff7262;
+}
+
+html {
+  background-color: var(--color-background);
+}
+
+@layer utilities;
+
+@layer utilities {
+  .firstGradient {
+    @apply bg-gradient-to-r from-[#A259FF] to-[#FF6250];
+  }
+  .secondGradient {
+    @apply bg-gradient-to-r from-[#A259FF] to-[#377DF7];
+  }
+  .space-mono {
+    font-family: "Space Mono", Helvetica, sans-serif;
+    font-weight: 700;
+  }
+  .work-sans {
+    font-family: "Work Sans", Helvetica, sans-serif;
+    font-optical-sizing: auto;
+  }
+}
