@@ -14,12 +14,15 @@
       <img class="flex h-full mx-auto" src="/public/static/highlighted.gif" alt="highlighted" />
     </div>
     <div>
-      <button
-        class="my-[14px] xl:my-[30px] flex w-full md:w-fit sm:justify-self-center md:justify-self-start h-fit btn b py-4 px-8"
-      >
-        <img src="/public/icons/RocketLaunch.svg" alt="launch" />
-        <p>Get started</p>
-      </button>
+      <router-link :to="{ name: 'dev' }">
+        <button
+          class="my-[14px] xl:my-[30px] flex w-full md:w-fit sm:justify-self-center md:justify-self-start h-fit btn b py-4 px-8"
+        >
+          <img src="/public/icons/RocketLaunch.svg" alt="launch" />
+          <p>Get started</p>
+        </button>
+      </router-link>
+
       <div class="flex flex-wrap justify-between">
         <h5 class="h5 w-1/3 space-mono">240k+</h5>
         <h5 class="h5 w-1/3 space-mono">240k+</h5>

@@ -15,28 +15,31 @@ const drawerStore = useDrawerStore();
   <Transition name="slide">
     <aside
       v-if="drawerStore.drawer"
-      class="fixed top-0 right-0 h-full w-2/3 md:w-64 z-20 text-text work-sans font-semibold bg-backgroundSecond flex flex-col gap-5"
+      class="fixed top-0 right-0 h-full w-2/3 md:w-64 z-20 text-text work-sans font-semibold bg-backgroundSecond flex flex-col gap-2"
     >
-      <div class="flex items-center gap-2 m-5 justify-around">
-        <img
-          @click="drawerStore.close"
-          class="burger"
-          src="/public/icons/Burger Menu.svg"
-          alt="burgerMenu"
-        />
+      <div class="flex items-center m-5 justify-evenly">
         <button class="btn b py-4 px-6 max-w-fit overflow-hidden">
           <img src="/public/icons/User.svg" alt="user" />
-          <p>Sign Up</p>
-        </button>
+          <p>Sign Up</p></button
+        ><img
+          @click="drawerStore.close"
+          class="burger invert"
+          src="/public/icons/Close.svg"
+          alt="burgerMenu"
+        />
       </div>
       <ul
-        class="flex flex-col w-full text-center md:text-start b [&>*]:focus:bg-zinc-500 [&>*]:hover:bg-zinc-500 [&>*]:py-5 [&>*]:transition-all"
+        class="flex flex-col w-full text-center md:text-start b [&>*]:hover:underline [&>*]:focus:bg-zinc-500 [&>*]:hover:bg-zinc-500 [&>*]:py-5 [&>*]:transition-all"
       >
         <router-link @click="drawerStore.close" :to="{ name: 'Marketplace' }">
           <li class="px-5 cursor-pointer">Marketplace</li>
         </router-link>
-        <li class="px-5 cursor-pointer">Rankings</li>
-        <li class="px-5 cursor-pointer">Connect a wallet</li>
+        <router-link @click="drawerStore.close" :to="{ name: 'dev' }">
+          <li class="px-5 cursor-pointer">Rankings</li>
+        </router-link>
+        <router-link @click="drawerStore.close" :to="{ name: 'dev' }">
+          <li class="px-5 cursor-pointer">Connect a wallet</li>
+        </router-link>
       </ul>
     </aside>
   </Transition>

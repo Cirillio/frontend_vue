@@ -19,17 +19,19 @@ const drawerStore = useDrawerStore();
         <router-link :to="{ name: 'Marketplace' }">
           <li class="py-3 px-5 cursor-pointer">Marketplace</li>
         </router-link>
-        <router-link :to="{ name: 'MainPage' }">
+        <router-link :to="{ name: 'dev' }">
           <li class="py-3 px-5 cursor-pointer">Rankings</li>
         </router-link>
-        <router-link :to="{ name: 'MainPage' }">
+        <router-link :to="{ name: 'dev' }">
           <li class="py-3 px-5 cursor-pointer">Connect a wallet</li>
         </router-link>
       </ul>
-      <button class="btn b py-4 px-6">
-        <img src="/public/icons/User.svg" alt="user" />
-        <p>Sign Up</p>
-      </button>
+      <router-link :to="{ name: 'dev' }">
+        <button class="btn b py-4 px-6">
+          <img src="/public/icons/User.svg" alt="user" />
+          <p>Sign Up</p>
+        </button>
+      </router-link>
     </div>
     <img
       @click="drawerStore.open"
