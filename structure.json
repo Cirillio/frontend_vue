@@ -14,6 +14,7 @@
     "id": "",
     "name": "",
     "description": "",
+    "category": "",
     "img": {
       "url": ""
     },
@@ -45,6 +46,12 @@
     "id": "",
     "artist_id": "",
     "collection_id": ""
+  },
+  "trending_collections": {
+    "id": "",
+    "rating": "",
+    "collection_id": "",
+    "subs": "[..collection_sub_id]"
   },
   "auctions": {
     "id": "",

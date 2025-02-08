@@ -6,7 +6,7 @@ import MainDrawer from "../components/MainDrawer.vue";
 <template>
   <MainDrawer />
   <MainHeader />
-  <main>
+  <main class="w-full px-14 py-10 xl:px-40 2xl:px-60 xl:py-20 flex flex-col items-center gap-36">
     <RouterView />
   </main>
 </template>

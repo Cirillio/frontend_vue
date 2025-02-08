@@ -5,8 +5,11 @@ export const useDrawerStore = defineStore("drawer", {
     drawer: false,
   }),
   actions: {
-    switch() {
-      this.drawer = !this.drawer;
+    open() {
+      this.drawer = true;
+    },
+    close() {
+      this.drawer = false;
     },
   },
 });

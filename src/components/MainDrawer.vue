@@ -7,7 +7,7 @@ const drawerStore = useDrawerStore();
   <Transition name="fade">
     <div
       v-if="drawerStore.drawer"
-      @click="drawerStore.switch"
+      @click="drawerStore.close"
       class="fixed w-full h-full bg-[rgba(0,0,0,0.5)] z-10 flex"
     ></div>
   </Transition>
@@ -19,7 +19,7 @@ const drawerStore = useDrawerStore();
     >
       <div class="flex items-center gap-2 m-5 justify-around">
         <img
-          @click="drawerStore.switch"
+          @click="drawerStore.close"
           class="burger"
           src="/public/icons/Burger Menu.svg"
           alt="burgerMenu"
@@ -32,7 +32,7 @@ const drawerStore = useDrawerStore();
       <ul
         class="flex flex-col w-full text-center md:text-start b [&>*]:focus:bg-zinc-500 [&>*]:hover:bg-zinc-500 [&>*]:py-5 [&>*]:transition-all"
       >
-        <router-link to="/marketplace">
+        <router-link @click="drawerStore.close" :to="{ name: 'Marketplace' }">
           <li class="px-5 cursor-pointer">Marketplace</li>
         </router-link>
         <li class="px-5 cursor-pointer">Rankings</li>
