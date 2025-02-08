@@ -3,11 +3,14 @@
     "id": "",
     "name": "",
     "bio": "",
-    "avatar": "//",
+    "avatar": "/",
     "crypt_id": "",
     "links": {
-      "instagram": "",
-      "telegram": ""
+      "personal": "",
+      "discord": "",
+      "youtube": "",
+      "twitter": "",
+      "instagram": ""
     }
   },
   "nfts": {
@@ -15,13 +18,15 @@
     "name": "",
     "description": "",
     "category": "",
-    "img": {
-      "url": ""
-    },
+    "img": "/",
     "price": "",
     "artist_id": "",
     "created_date": "",
     "sold_id": ""
+  },
+  "categorys": {
+    "id": "",
+    "name": ""
   },
   "solds": {
     "id": "",
@@ -40,7 +45,7 @@
     "id": "",
     "name": "",
     "artist_id": "",
-    "list": ["nft_id"]
+    "nfts": "[..nft_id]"
   },
   "collection_subs": {
     "id": "",

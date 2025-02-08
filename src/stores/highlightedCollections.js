@@ -18,9 +18,9 @@ export const useHighlightedCollectionsStore = defineStore("highlightedCollection
         const { data: trendings } = await axios.get(url.trendingCollectionsUrl + "?sortBy=-rating");
         if (trendings.length === 0) return;
         this.trending_collections = trendings.slice(0, 3);
-        console.log(this.isLoading);
+        // console.log(this.isLoading);
 
-        console.table(this.trending_collections);
+        // console.table(this.trending_collections);
 
         let collections_id = "";
         this.trending_collections.forEach((item) => {
@@ -31,7 +31,7 @@ export const useHighlightedCollectionsStore = defineStore("highlightedCollection
           url.collectionsUrl + "?" + collections_id + "_relations=artists" // получаю художника по artist_id в объекте collection (полученный объект artist заменяет поле artist_id)
         );
 
-        console.table(collections);
+        // console.table(collections);
 
         ///////////////
 
@@ -45,6 +45,7 @@ export const useHighlightedCollectionsStore = defineStore("highlightedCollection
 
         const { data: nfts } = await axios.get(url.nftsUrl + "?" + nfts_id + "_select=id,img"); // получаю ид и имг нужных нфт
 
+        // console.log(nfts);
         //////////////
 
         this.highlighted_collections = collections.map((collection) => ({
@@ -59,7 +60,9 @@ export const useHighlightedCollectionsStore = defineStore("highlightedCollection
 
         ///////////////
 
-        console.table(this.highlighted_collections);
+        // console.table(this.highlighted_collections);
+
+        console.log("highlightings successfully loaded");
       } catch (error) {
         this.error = error.message;
         console.error(error);

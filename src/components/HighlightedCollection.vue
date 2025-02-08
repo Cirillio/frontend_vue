@@ -19,9 +19,11 @@ defineProps({
       <div
         class="w-full grid grid-cols-3 grid-rows-1 gap-x-3 [&>*]:cursor-pointer [&>*]:rounded-[20px] [&>*]:aspect-square"
       >
-        <img :src="'../..' + nfts[1].img" alt="nft_2" />
-        <img :src="'../..' + nfts[2].img" alt="nft_3" />
-        <h5 class="flex bg-action space-mono items-center justify-center h5">{{ remaining }}+</h5>
+        <img v-if="nfts[1]" :src="'../..' + nfts[1].img" alt="nft_2" />
+        <img v-if="nfts[2]" :src="'../..' + nfts[2].img" alt="nft_3" />
+        <h5 class="flex bg-action space-mono items-center justify-center p">
+          {{ remaining ? remaining + "+" : "more" }}
+        </h5>
       </div>
       <h5
         class="h5 w-fit cursor-pointer work-sans font-semibold transition-all group-hover:translate-x-5 group-hover:underline"

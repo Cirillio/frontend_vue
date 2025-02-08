@@ -19,7 +19,7 @@ onMounted(async () => {
   >
     <h3 class="h3 font-semibold">Trending Collections</h3>
     <p class="p">Checkout our weekly updated trending collection.</p>
-    <div class="mt-5 flex flex-col sm:flex-row gap-5 w-full">
+    <div class="mt-5 flex flex-col md:flex-row gap-5 w-full">
       <HighlightedCollection
         v-for="collection in highlightedCollections.highlighted_collections"
         :key="collection.id"

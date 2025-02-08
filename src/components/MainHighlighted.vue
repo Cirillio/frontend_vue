@@ -5,7 +5,7 @@
   >
     <div class="flex flex-col w-full h-fit gap-5">
       <h1 class="h1 leading-tight">Discover digital art & Collect NFTs</h1>
-      <p class="p">
+      <p class="p font-light">
         NFT marketplace UI created with Anima for Figma. Collect, buy and sell art from more than
         20k NFT artists.
       </p>

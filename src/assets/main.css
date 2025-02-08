@@ -6,6 +6,7 @@
   --color-backgroundSecond: #3b3b3b;
   --color-label: #858584;
   --color-text: #ffffff;
+  --color-desc: #cccccc;
   --color-action: #a259ff;
   --color-blueAccent: #377df7;
   --color-redAccent: #ff7262;
@@ -33,7 +34,7 @@ html {
     @apply text-[16px];
   }
   .p {
-    @apply text-[16px] xl:text-[22px] font-normal;
+    @apply text-[16px] xl:text-[22px];
   }
   .h1 {
     @apply text-[28px] md:text-[38px] xl:text-[67px];
