@@ -18,6 +18,7 @@ export const useHighlightedCollectionsStore = defineStore("highlightedCollection
         const { data: trendings } = await axios.get(url.trendingCollectionsUrl + "?sortBy=-rating");
         if (trendings.length === 0) return;
         this.trending_collections = trendings.slice(0, 3);
+        console.log(this.isLoading);
 
         console.table(this.trending_collections);
 
