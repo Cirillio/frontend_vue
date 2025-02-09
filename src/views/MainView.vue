@@ -4,6 +4,7 @@ import TrendingCollections from "../components/TrendingCollections.vue";
 </script>
 
 <template>
-  <MainHighlighted />
-  <TrendingCollections />
+  <div v-auto-animate class="w-full flex flex-col global-px py-10 xl:py-20 items-center gap-36">
+    <MainHighlighted /> <TrendingCollections />
+  </div>
 </template>

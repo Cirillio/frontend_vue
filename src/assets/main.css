@@ -19,6 +19,10 @@ html {
 @layer utilities;
 
 @layer utilities {
+  .global-px {
+    @apply px-10  xl:px-40 2xl:px-60;
+  }
+
   .btn {
     @apply flex gap-2 items-center justify-center bg-action  rounded-[20px] cursor-pointer transition hover:scale-95;
   }
@@ -64,7 +68,6 @@ html {
   }
   .space-mono {
     font-family: "Space Mono", Helvetica, sans-serif;
-    font-weight: 700;
   }
   .work-sans {
     font-family: "Work Sans", Helvetica, sans-serif;

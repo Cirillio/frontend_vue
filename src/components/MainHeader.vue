@@ -5,12 +5,12 @@ const drawerStore = useDrawerStore();
 </script>
 <template>
   <header
-    class="flex w-full h-24 items-center justify-between px-6 md:px-12 py-5 text-text work-sans font-semibold"
+    class="flex w-full h-24 items-center justify-between px-6 md:px-12 py-5 text-text work-sans"
   >
     <router-link :to="{ name: 'MainPage' }"> <MainLogo /> </router-link>
     <div class="gap-2.5 items-center min-[100px]:hidden xl:flex">
       <ul
-        class="flex gap-2.5 b [&>*>*]:text-text [&>*>*]:hover:underline [&>*>*]:transition-all duration-1000"
+        class="flex gap-2.5 b [&>*>*]:text-text [&>*>*]:font-semibold [&>*>*]:hover:underline [&>*>*]:transition-all duration-1000"
       >
         <router-link :to="{ name: 'Marketplace' }">
           <li class="py-3 px-5 cursor-pointer">Marketplace</li>
@@ -23,7 +23,7 @@ const drawerStore = useDrawerStore();
         </router-link>
       </ul>
       <router-link :to="{ name: 'dev' }">
-        <button class="btn b py-4 px-6">
+        <button class="btn b py-4 px-6 font-semibold">
           <img src="/public/icons/User.svg" alt="user" />
           <p>Sign Up</p>
         </button>

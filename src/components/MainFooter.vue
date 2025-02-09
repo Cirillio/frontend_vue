@@ -3,7 +3,7 @@ import MainLogo from "./MainLogo.vue";
 </script>
 <template>
   <footer
-    class="w-full mt-auto flex flex-col gap-8 text-desc bg-backgroundSecond py-10 px-6 xl:px-40 2xl:px-60"
+    class="w-full mt-auto flex flex-col gap-8 text-desc border-t border-t-background bg-backgroundSecond py-10 px-6 xl:px-40 2xl:px-60"
   >
     <div class="flex flex-col lg:flex-row md:mx-8 font-light gap-16">
       <div class="work-sans flex flex-1 flex-col gap-5">
@@ -18,7 +18,7 @@ import MainLogo from "./MainLogo.vue";
         </div>
       </div>
       <div class="flex flex-1 flex-col gap-5 [&>*>*]:hover:underline">
-        <h5 class="h5 space-mono max-h-[30px] text-text">Explore</h5>
+        <h5 class="h5 space-mono max-h-[30px] text-text font-semibold">Explore</h5>
         <router-link :to="{ name: 'Marketplace' }">
           <p>Marketplace</p>
         </router-link>
@@ -30,7 +30,7 @@ import MainLogo from "./MainLogo.vue";
         </router-link>
       </div>
       <div class="flex flex-2 flex-col gap-5">
-        <h5 class="h5 space-mono text-text">Join Our Weekly Digest</h5>
+        <h5 class="h5 space-mono text-text font-semibold">Join Our Weekly Digest</h5>
         <p class="work-sans lg:pr-32 font-light">
           Get exclusive promotions & updates straight to your inbox.
         </p>
